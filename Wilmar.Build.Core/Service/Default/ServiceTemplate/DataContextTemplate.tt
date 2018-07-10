@@ -1,0 +1,79 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Wilmar.Foundation" #>
+<#@ import namespace="Wilmar.Model.Core.Definitions" #>
+<#@ import namespace="Wilmar.Model.Core.Definitions.Entities" #>
+<#@ import namespace="Wilmar.Model.Core.Definitions.Entities.Members" #>
+using System;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using System.Data.SqlClient;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using Wilmar.Service.Common.ProjectBase;
+using Wilmar.<#=Data.Identity#>.Service.Models;
+
+namespace Wilmar.<#=Data.Identity#>.Service
+{
+<#	string strDataContextName = Documnet.Name + "DataContext"; #>
+
+	public class <#=Data.ClassName#> : DataContextBase
+	{
+		public static readonly Wilmar.Foundation.Projects.Configures.DatabaseConfigureItem ___DatabaseConfigureItem = GetConfigure(typeof(<#= Data.ClassName #>).Assembly,<#= Documnet.Id #>);
+
+		public <#= Data.ClassName #>(string nameOrConnectionString, string providerName)
+			:base(nameOrConnectionString, providerName)
+		{ }
+
+		public <#= Data.ClassName #>()
+			:base(___DatabaseConfigureItem.ConnectionString, ___DatabaseConfigureItem.ProviderName)
+		{
+		    this.Database.CommandTimeout = 120;//2Mins
+<# if(Documnet.BlockModelValidate) { #>
+			Database.SetInitializer<<#= Data.ClassName #>>(null);
+<#	} else { #>
+			var config = GetConfigure(typeof(<#= Data.ClassName #>).Assembly,<#= Documnet.Id #>);
+			if(!config.AutoMigration && !config.AllowDataLoss)
+				Database.SetInitializer<<#= Data.ClassName #>>(null);
+			else
+				Database.SetInitializer<<#= Data.ClassName #>>(CreateInitializer<<#= Data.ClassName #>>(config.AutoMigration, config.AllowDataLoss));
+<#	} #>
+		}
+
+<#	foreach (var entity in Data.Entitys.Values) {#>
+		
+		public virtual DbSet<<#= entity.ClassName #>> <#= entity.ClassName #>s { get; set; }
+<#	} #>
+
+		protected override void OnModelCreating(DbModelBuilder builder)
+		{		
+			base.OnModelCreating(builder);
+<# if (AllowRenameProcedureParameter && EntityStoreProduceNames.Length > 0) { #>
+			 var _dic = ResetStoreProceduresParameter(builder, temp=>
+			 {
+<#	foreach (var item in Data.Relations) {#>
+				temp.Entity<<#= item.FromEntity.ClassName #>>().Has<#= GetHasName(item) #>(<#= GetHasProperty(item) #>).With<#= GetWithName(item) #>(<#= GetWithProperty(item) #>)<#= GetForeignKey(item) #><#= GetCascadeOnDelete(item) #>;
+<#	} #>			 
+			 }, new Type[] 
+			 { 
+<#	foreach (var name in EntityStoreProduceNames) {#>
+				typeof(<#= name #>), 
+<#	} #>
+			 });
+
+<#	foreach (var name in EntityStoreProduceNames) {#>
+            ProcessStoreProceduresParameter<<#= name #>>(builder, _dic[typeof(<#= name #>)]);
+<#	} #>
+<#	} #>
+
+ <#	foreach (var item in Data.Relations) {#>
+			builder.Entity<<#= item.FromEntity.ClassName #>>().Has<#= GetHasName(item) #>(<#= GetHasProperty(item) #>).With<#= GetWithName(item) #>(<#= GetWithProperty(item) #>)<#= GetForeignKey(item) #><#= GetCascadeOnDelete(item) #>;
+<#	} #>
+
+		}
+			
+	}
+}

@@ -1,0 +1,332 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Wilmar.Foundation" #>
+<#@ import namespace="Wilmar.Model.Core.Definitions" #>
+<#@ import namespace="Wilmar.Model.Core.Definitions.Entities" #>
+<#@ import namespace="Wilmar.Model.Core.Definitions.Entities.Members" #>
+<#@ import namespace="Wilmar.Model.Core.Definitions.Entities.Configure" #>
+<#@ import namespace="Wilmar.Compile.Core.Service.Models" #>
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml;
+using System.Web.OData;
+using System.Web.OData.Routing;
+using System.Web.OData.Query;
+using System.Web.Http;
+using System.Net;
+using System.Threading.Tasks;
+using System.Data.Entity;
+using Wilmar.<#= Data.Identity #>.Service.Models;
+using Wilmar.Service.Common.ProjectBase;
+using Wilmar.Service.Common.ProjectBase.FilterExpression;
+using Wilmar.Interface.Common;
+
+namespace Wilmar.<#= Data.Identity #>.Service.Controllers
+{
+	<#= Data.GenerateCode() #>
+	public class <#= Data.ClassName #> : EntitySetController<<#= Data.Entity.DataContext.ClassName #>,<#= Data.Entity.ClassName #>> 
+	{
+<# foreach (var method in Data.Methods) {
+    switch (method.MethodType) {
+        case EControllerMethodType.GetQueryable:#>
+<# if(!Data.Entity.IsDimFast){ #>
+		private void Get(ref IQueryable<<#=Documnet.Name#>> query)
+		{
+			<#= Configure.GetInterceptor==null?"": Configure.GetInterceptor#>
+		}
+<# } #>
+		
+<# if(Data.Entity.IsDimFast){ #>
+			<#= WriteDimFastHelper() #>
+		public IQueryable<<#=Documnet.Name#>DimProxy> Get(ODataQueryOptions<<#=Documnet.Name#>DimProxy> queryOptions)
+		{
+			<#= WriteDimFastQuery() #>
+		}
+<# } else { #>
+		<#= method.GenerateCode() #>
+		public IQueryable<<#=Documnet.Name#>> Get()
+		{
+			var _Query = this.Query;
+			Get(ref _Query);
+<# if (Configure.QueryFilter != null && Configure.QueryFilter.Filters.Count > 0) {
+		WriteFilterCode(Configure.QueryFilter); 
+	} #>
+			return _Query.AsNoTracking();
+		}
+<# } #>
+<#            break;
+        case EControllerMethodType.GetSingleResult:#>
+<# if(!Data.Entity.IsDimFast){ #>
+		<#= method.GenerateCode() #>
+		public SingleResult<<#=Documnet.Name#>> Get(<#= Data.EntityKeyParameter #>)
+		{
+			var _Query = this.Query;
+			Get(ref _Query);
+<# if (Configure.QueryFilter != null && Configure.QueryFilter.Filters.Count > 0) {
+		WriteFilterCode(Configure.QueryFilter); 
+	} #>
+			return SingleResult.Create(_Query.Where(<#= Data.EntityLinqWhere #>).AsNoTracking());
+		}
+<# } #>
+<#            break;
+        case EControllerMethodType.GetNavigateQueryable:#>
+
+		<#= method.GenerateCode() #>
+		public IQueryable<<#= method.Navigation.ToEntity.ClassName #>> Get<#= method.Navigation.Name #>(<#= Data.EntityKeyParameter #>)
+		{
+		    return EntitySet.Where(<#= Data.EntityLinqWhere #>).SelectMany(m => m.<#= method.Navigation.Name #>);
+		}
+<#            break;
+        case EControllerMethodType.GetNavigateSingleResult:#>
+
+		<#= method.GenerateCode() #>
+		public SingleResult<<#= method.Navigation.ToEntity.ClassName #>> Get<#= method.Navigation.Name #>(<#= Data.EntityKeyParameter #>)
+		{
+		    return SingleResult.Create(EntitySet.Where(<#= Data.EntityLinqWhere #>).Select(m => m.<#= method.Navigation.Name #>));
+		}
+<#            break;
+        case EControllerMethodType.Post:#>
+
+		<#= method.GenerateCode() #>
+		public async Task<IHttpActionResult> Post(<#= Documnet.Name #> entity)
+		{
+			return await PostEntity(entity);
+		}
+<#            break;
+        case EControllerMethodType.Delete:#>
+
+		<#= method.GenerateCode() #>
+		public async Task<IHttpActionResult> Delete(<#= Data.EntityKeyParameter #>)
+		{
+			return await DeleteEntity(<#= Data.EntityLinqWhere #>);
+		}
+<#            break;
+        case EControllerMethodType.Put:#>
+
+		<#= method.GenerateCode() #>
+		public async Task<IHttpActionResult> Put(<#= Data.EntityKeyParameter #>, Delta<<#= Documnet.Name #>> patch)
+		{
+			return  await PutEntity(<#= Data.EntityLinqWhere #>, patch);
+		}
+<#            break;
+        case EControllerMethodType.Patch:#>
+
+		<#= method.GenerateCode() #>
+		[AcceptVerbs("PATCH", "MERGE")]
+		public async Task<IHttpActionResult> Patch(<#= Data.EntityKeyParameter #>, Delta<<#= Documnet.Name#>> data)
+		{
+			return await PatchEntity(<#= Data.EntityLinqWhere #>, data);
+		}
+<#            break;
+        case EControllerMethodType.CreateRef:#>
+
+		<#= method.GenerateCode() #>
+		[AcceptVerbs("POST", "PUT")]
+		public async Task<IHttpActionResult> CreateRef(<#= Data.EntityKeyParameter #>, string navigationProperty, [FromBody] Uri link)
+		{
+			System.Diagnostics.Debug.WriteLine("----------<#=Documnet.Name#>__CreateRef");
+			return await base.CreateRef(<#= Data.EntityLinqWhere #>, navigationProperty, link);
+		}
+<#            break;
+        case EControllerMethodType.DeleteRef1:#>
+
+		<#= method.GenerateCode() #>
+		public async Task<IHttpActionResult> DeleteRef(<#= Data.EntityKeyParameter #>, string navigationProperty, [FromBody] Uri link)
+		{
+			System.Diagnostics.Debug.WriteLine("----------<#=Documnet.Name#>__DeleteRef");
+			return await base.DeleteRef(<#= Data.EntityLinqWhere #>, navigationProperty);
+		}
+<#            break;
+        case EControllerMethodType.DeleteRef2:#>
+
+		<#= method.GenerateCode() #>
+		public async Task<IHttpActionResult> DeleteRef(<#= Data.EntityKeyParameter #>, [FromODataUri] string relatedKey, string navigationProperty)
+		{
+			System.Diagnostics.Debug.WriteLine("----------<#=Documnet.Name#>__DeleteRef");
+			return await base.DeleteRef(<#= Data.EntityLinqWhere #>, navigationProperty, relatedKey);
+		}
+<#            break;
+        case EControllerMethodType.CustomAction: var action = method.Action; #>
+
+		<#= method.GenerateCode() #>
+		[HttpPost]
+		public async Task<IHttpActionResult> <#=action.Name#>(<#= !action.Source.IsCollectionInvoke ? ( Data.EntityKeyParameter + "," ) : "" #>ODataActionParameters __params)
+		{
+<#		foreach (var para in action.Parameters) { #>
+<#			if(!para.Value.IsEntityType) { #>
+			var <#= para.Key #> = (<#= para.Value.TypeName #>)__params["<#= para.Key #>"];
+<#			} else if(para.Value.IsCollection) { #>
+			var <#= para.Key #> = __params["<#= para.Key #>"] as System.Collections.Generic.IEnumerable<<#= para.Value.TypeName #>>;
+<#			} else { #>
+			var <#= para.Key #> = __params["<#= para.Key #>"] as <#= para.Value.TypeName #>;
+<#			} #>
+<#		} #>
+			System.Diagnostics.Debug.WriteLine("----------<#= Documnet.Name #>__<#= action.Name #>");
+			<#= action.Source.Body ?? "" #>	 
+<#		if (action.ReturnType == null || string.IsNullOrEmpty(action.Source.Body)) { #>
+			return  StatusCode(HttpStatusCode.NoContent);
+<#		} #>
+		}
+<#            break;
+        case EControllerMethodType.OnCreateEntity:#>
+		protected override void OnCreateEntity(<#= Documnet.Name #> entity, EntityOperationArgs args) 
+		{ 
+<#		foreach (var metdata in Data.InheritEntitys) {
+			var entity = metdata.Definition; #>
+<#		foreach (var pro in entity.Members.OfType<PrimaryMember>().Where(a => a.GenerateMode == EPrimaryGenerateMode.Code)) { #>
+			entity.<#= pro.Name #> = <#= pro.CreateGenerate #>;
+<#		} #>     
+<#		foreach (var pro in entity.Members.OfType<ColumnMember>().Where(a => a.GenerateMode == EColumnGenerateMode.CodeCreate || a.GenerateMode == EColumnGenerateMode.CodeCreateUpdate)) { #>
+			entity.<#= pro.Name #> = <#= pro.CreateGenerate #>;
+<#		} #>  
+<#			var configure = entity.Controller;
+			if (configure != null) { #>
+			<#= configure.PostInterceptor ?? "" #>          
+<#			}
+		} #>
+		}
+<#            break;
+
+
+        case EControllerMethodType.OnUpdateEntity:#>
+		protected override void OnUpdateEntity(<#=Documnet.Name #> entity, EntityOperationArgs args) 
+		{ 
+<#		foreach (var metdata in Data.InheritEntitys) {
+			var entity = metdata.Definition; #>
+<#		foreach (var pro in entity.Members.OfType<ColumnMember>().Where(a => a.GenerateMode == EColumnGenerateMode.CodeCreate)) { #>
+			DataContext.Entry<<#=Documnet.Name#>>(entity).Property("<#= pro.Name #>").IsModified = false;
+<#		} #>
+<#		foreach (var pro in entity.Members.OfType<ColumnMember>().Where(a => a.GenerateMode == EColumnGenerateMode.CodeUpdate || a.GenerateMode == EColumnGenerateMode.CodeCreateUpdate)) { #>
+			entity.<#= pro.Name #> = <#= pro.CreateGenerate #>;
+<#		} #>
+<#			var configure = entity.Controller;
+			if (configure != null) { #>
+			<#= configure.PutInterceptor ?? "" #>
+<#			}
+		} #>
+		}
+<#            break;
+        case EControllerMethodType.OnDeleteEntity:#>
+		protected override void OnDeleteEntity(<#= Documnet.Name #> entity, EntityOperationArgs args) 
+		{ 
+<#		foreach (var metdata in Data.InheritEntitys) {
+			var configure = metdata.Definition.Controller;
+			if (configure != null) { #>
+			<#= configure.DeleteInterceptor ?? "" #>
+<#			}
+		} #>
+		}
+<#            break;
+        case EControllerMethodType.CreateRefOverride:#>
+
+		protected override bool CreateRef(<#=Documnet.Name#> entity, string navigationProperty, Uri link)
+		{
+			object target = null;
+		    switch (navigationProperty)
+		    {
+<#	foreach (var member in Data.Entity.NavigationPropertys.Values) { #>
+				case "<#= member.Name #>":
+						target = GetLinkTarget<<#= member.ToEntity.ClassName #>>(link);
+<#		if (member.PropertyType.IsCollection) { #>
+						entity.<#= member.Name #>.Add((<#= member.ToEntity.ClassName #>)target);
+<#		} else { #>
+						entity.<#= member.Name #> = (<#= member.ToEntity.ClassName #>)target;
+<#		} #>
+					break;
+<#	} #>
+				default:
+					return base.CreateRef(entity, navigationProperty, link);
+            }
+<#	if (Entity.Controller != null) { #>
+			<#= Entity.Controller.CreateRefInterceptor ?? "" #>
+<#	} #>
+            return true;
+        }
+<#            break;
+        case EControllerMethodType.DeleteRefOverride:#>
+
+		protected override bool DeleteRef(<#=Documnet.Name#> entity, string navigationProperty, string[] relatedKeys)
+        {
+			object target = null;
+            switch (navigationProperty)
+            {
+<#	foreach (var member in Data.Entity.NavigationPropertys.Values) { #>
+				case "<#= member.Name #>":
+<#		if (member.PropertyType.IsCollection) { #>
+					target = DataContext.<#= member.ToEntity.ClassName #>s.Find(<#= GenerateNavigateFindParameter(member) #>);
+					entity.<#= member.Name #>.Remove((<#= member.ToEntity.ClassName #>)target);
+<#		} else { #>
+					DataContext.Entry(entity).Reference<<#= member.ToEntity.ClassName #>>("<#= member.Name #>").Load();
+					entity.<#= member.Name #> = null;
+<#		} #>
+					break;
+<#	} #>
+                default:
+                    return base.DeleteRef(entity, navigationProperty, relatedKeys);
+            }
+<#	if (Entity.Controller != null) { #>
+			<#= Entity.Controller.DeleteRefInterceptor ?? "" #>
+<#	} #>
+            return true;
+        }
+<#            break;
+    }
+} #>
+
+<# if (Data.UpdateEntityCommonPropertyPerssions.Count > 0) { #>
+        protected override Dictionary<int, string> UpdateEntityCommonPropertyPermissions
+        {
+            get { return _UpdateEntityCommonPropertyPermissions; }
+        }
+        private static readonly Dictionary<int, string> _UpdateEntityCommonPropertyPermissions = new Dictionary<int, string>()
+        {
+<#		foreach (var item in Data.UpdateEntityCommonPropertyPerssions) {#>
+            { <#= item.Key #>,"<#= item.Value #>" },
+<#		} #>
+        };
+<#	} #>
+
+<# if (Data.UpdateEntityNavigatePropertyPermissions.Count > 0) { #>
+        protected override Dictionary<string, int> UpdateEntityNavigatePropertyPermissions
+        {
+            get { return _UpdateEntityNavigatePropertyPermissions; }
+        }
+        private static readonly Dictionary<string, int> _UpdateEntityNavigatePropertyPermissions = new Dictionary<string, int>()
+        {
+<#		foreach (var item in Data.UpdateEntityNavigatePropertyPermissions) {#>
+            { "<#= item.Key #>",<#= item.Value #> },
+<#		} #>
+        };
+<#	} #>
+
+<# if (Configure.DataFilter != null && Configure.DataFilter.Filters.Count > 0) { #>
+        public override IQueryable<<#=Documnet.Name#>> Query
+        {
+            get 
+			{ 
+				if(_Query == null)
+				{
+					_Query = base.Query;
+<# WriteFilterCode(Configure.DataFilter); #>
+				}
+				return _Query; 
+			}
+        }
+        private IQueryable<<#=Documnet.Name#>> _Query;
+<# } #>
+	}
+}
+<#+ void WriteFilterCode(EntityQuery filter) { #>
+					var _builder = new DynamicFilterBuilder<<#=Documnet.Name#>>(this);
+					var _g0 = _builder.Root;
+					<#= WriteFilter(filter) #>
+					var _exp = _g0.Expression;
+					if(_exp != null)
+						_Query = _Query.Where(_exp);
+<#+ } #>

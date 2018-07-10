@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CA59478C-9960-4CF6-A41F-FC56932C4448}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wilmar.Compile.Core</RootNamespace>
+    <AssemblyName>Wilmar.Compile.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Wilmar.Foundation">
+      <HintPath>..\..\lib\core\$(Platform)\Wilmar.Foundation.dll</HintPath>
+    </Reference>
+    <Reference Include="Wilmar.Service.Common">
+      <HintPath>..\..\lib\core\$(Platform)\Wilmar.Service.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dojo\DojoCompile.cs" />
+    <Compile Include="Dojo\ConfigBuildType.cs" />
+    <Compile Include="Dojo\IndexBuildType.cs" />
+    <Compile Include="Dojo\PreviewIndexBuildType.cs" />
+    <Compile Include="Dojo\PreviewScreenBuildType.cs" />
+    <Compile Include="Dojo\ScreenBuildType.cs" />
+    <Compile Include="Ionic\ConfigBuildType.cs" />
+    <Compile Include="Ionic\IndexBuildType.cs" />
+    <Compile Include="Ionic\IonicCompile.cs" />
+    <Compile Include="Ionic\PreviewIndexBuildType.cs" />
+    <Compile Include="Ionic\PreviewScreenBuildType.cs" />
+    <Compile Include="Ionic\ScreenBuildType.cs" />
+    <Compile Include="Kendo\IndexBuildType.cs" />
+    <Compile Include="Kendo\KendoCompile.cs" />
+    <Compile Include="Kendo\PreviewScreenBuldType.cs" />
+    <Compile Include="Kendo\ScreenBuildType.cs" />
+    <Compile Include="Service\BuildTypes\QueryControllterBuildType.cs" />
+    <Compile Include="Service\BuildTypes\ServiceBuildType.cs" />
+    <Compile Include="Service\BuildTypes\DataContextBuildType.cs" />
+    <Compile Include="Service\BuildTypes\EntityControllterBuildType.cs" />
+    <Compile Include="Service\BuildTypes\EntityBuildType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Models\MetadataBase.cs" />
+    <Compile Include="Service\Models\ProjectMetadata.cs" />
+    <Compile Include="Service\Models\AnnotationMetadataBase.cs" />
+    <Compile Include="Service\Models\ControllerMetadata.cs" />
+    <Compile Include="Service\Models\DataContextMetadata.cs" />
+    <Compile Include="Service\Models\EntityMetadata.cs" />
+    <Compile Include="Service\Models\PropertyDataBase.cs" />
+    <Compile Include="Service\Models\DataTypeMetadata.cs" />
+    <Compile Include="Service\Models\QueryMetadata.cs" />
+    <Compile Include="Service\Models\ServiceMetadata.cs" />
+    <Compile Include="Service\ServiceCompile.cs" />
+    <Compile Include="TerminalCompileBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wilmar.Model.Core\Wilmar.Model.Core.csproj">
+      <Project>{3bb5c0ee-f139-4916-b2eb-46cf1ca44193}</Project>
+      <Name>Wilmar.Model.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

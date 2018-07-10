@@ -1,0 +1,110 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Wilmar.Foundation" #>
+using System;
+
+namespace Wilmar.<#=Data.Identity#>.Service.Models
+{
+	<#= Data.GenerateCode() #>
+	public class <#=Data.ClassName#>
+<# if (!string.IsNullOrEmpty(Data.BaseClassName)) { #>
+		: <#= Data.BaseClassName #>
+<#} #>
+	{
+<#	foreach (var member in Data.PrimaryPropertys.Values.Where(a => !a.IsInherit)) { #>
+
+		<#= member.GenerateCode() #>
+        public <#= member.PropertyType.TypeName #> <#= member.Name #>
+        {
+            get { return _<#= member.Name #>; }
+            set { _<#= member.Name #> = value; }
+        }
+        private <#= member.PropertyType.TypeName #> _<#= member.Name #><#= WriteDefaultValue(member.GetDefaultValue()) #>;
+<#	} #>
+<#	foreach (var member in Data.CommonPropertys.Values.Where(a => !a.IsInherit)) { #>
+
+		<#= member.GenerateCode() #>
+        public <#= member.PropertyType.TypeName #> <#= member.Name #>
+        {
+            get { return _<#= member.Name #>; }
+            set { _<#= member.Name #> = value; }
+        }
+        private <#= member.PropertyType.TypeName #> _<#= member.Name #><#= WriteDefaultValue(member.GetDefaultValue()) #>;
+<#	} #>
+<#	foreach (var member in Data.ColumnPropertys.Values.Where(a => !a.IsInherit)) { #>
+
+		<#= member.GenerateCode() #>
+        public <#= member.PropertyType.TypeName #> <#= member.Name #>
+        {
+            get { return _<#= member.Name #>; }
+            set { _<#= member.Name #> = value; }
+        }
+        private <#= member.PropertyType.TypeName #> _<#= member.Name #><#= WriteDefaultValue(member.GetDefaultValue()) #>;
+<#	} #>
+<#	foreach (var member in Data.CalculatePropertys.Values.Where(a => !a.IsInherit)) { #>
+
+		<#= member.GenerateCode() #>
+		public <#= member.PropertyType.TypeName #> <#= member.Name #> 
+		{ 
+			get { <#= member.Member.Body #> } 
+		}
+<#	} #>
+<#	foreach (var member in Data.NavigationPropertys.Values.Where(a => !a.IsInherit)) { #>
+<#		if (member.PropertyType.IsCollection) { #>
+		public virtual System.Collections.Generic.ICollection<<#= member.PropertyType.TypeName #>> <#= member.Name #> 
+		{ 
+			get { return _<#= member.Name #> ?? (_<#= member.Name #> = new System.Collections.Generic.HashSet<<#= member.PropertyType.EntityType.ClassName #>>()); } 
+		}
+		private System.Collections.Generic.HashSet<<#= member.PropertyType.EntityType.ClassName #>> _<#= member.Name #>;
+<#		} else { #>
+		<#= member.GenerateCode() #>
+		public virtual <#= member.PropertyType.TypeName #> <#= member.Name #> { get; set; }
+<#		} #>
+<#	} #>
+	}
+
+<# if(IsFast) { #>
+	public class <#=Data.ClassName#>DimProxy
+	{
+<#	foreach (var member in Data.PrimaryPropertys.Values.Where(a => !a.IsInherit)) { #>
+
+		<#= member.GenerateCode() #>
+        public <#= member.PropertyType.TypeName #> <#= member.Name #>
+        {
+            get { return _<#= member.Name #>; }
+            set { _<#= member.Name #> = value; }
+        }
+        private <#= member.PropertyType.TypeName #> _<#= member.Name #><#= WriteDefaultValue(member.GetDefaultValue()) #>;
+<#	} #>
+<#	foreach (var member in Data.ColumnPropertys.Values.Where(a => !a.IsInherit)) { #>
+
+		<#= member.GenerateCode() #>
+        public <#= member.PropertyType.TypeName #> <#= member.Name #>
+        {
+            get { return _<#= member.Name #>; }
+            set { _<#= member.Name #> = value; }
+        }
+        private <#= member.PropertyType.TypeName #> _<#= member.Name #><#= WriteDefaultValue(member.GetDefaultValue()) #>;
+<#	} #>
+<#	foreach (var member in Data.DimMemberPropertys.Values.Where(a => !a.IsInherit)) { #>
+
+		<#= member.GenerateCode() #>
+        public <#= member.PropertyType.TypeName #> <#= member.Name #>
+        {
+            get { return _<#= member.Name #>; }
+            set { _<#= member.Name #> = value; }
+        }
+        private <#= member.PropertyType.TypeName #> _<#= member.Name #><#= WriteDefaultValue(member.GetDefaultValue()) #>;
+<#	} #>
+	}
+<#	} #>
+
+}
+
+
+
+
+

@@ -1,0 +1,25 @@
+﻿import { NgModule } from '@angular/core';
+import { IonicPageModule, ProjectConfig, ContainerBase, FrameworkModule } from '../../platform';
+
+<# foreach (var page in Pages) { #>
+import { <#= page #> } from './pages/<#= page #>/<#= page #>';
+<# } #>
+
+import { <#= Compile.Project.Identity #> } from './<#= Compile.Project.Identity #>';
+import { <#= Compile.Project.Identity.ToUpper() #>_CONFIG } from '../../config/<#= Compile.Project.Identity #>/<#= Compile.Project.Identity #>.config';
+import { <#= Compile.Project.Identity.ToUpper() #>_CONTAINER } from './models/<#= Compile.Project.Identity #>.container';
+
+let screens: any[] = [<#= Compile.Project.Identity #>, <#= GenerateCode() #>];
+
+@NgModule({
+  declarations: screens,
+  imports: [FrameworkModule, IonicPageModule.forChild(<#= Compile.Project.Identity #>)],
+  providers: [
+    { provide: ProjectConfig, useValue: <#= Compile.Project.Identity.ToUpper() #>_CONFIG },
+    { provide: ContainerBase, useClass: <#= Compile.Project.Identity.ToUpper() #>_CONTAINER, deps: [ProjectConfig], multi: false }
+  ],
+  entryComponents: screens
+})
+export class <#= Compile.Project.Identity #>Module { 
+  
+}

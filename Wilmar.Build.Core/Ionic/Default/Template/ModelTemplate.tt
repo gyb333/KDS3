@@ -1,0 +1,64 @@
+﻿import { Component } from '@angular/core';
+import { ModelBase, Model, ModelProperty, ModelKey, DataType as System, ModelNavigation } from '../../../platform';
+
+<# foreach (var member in ImportMember) { #>
+import { <#= member.Key #> } from './<#= member.Key #>';
+<# } #>
+
+@Model({
+    name: "<#= Documnet.Name #>"
+})
+export class <#= Documnet.Name #> extends ModelBase {
+    constructor() { super(); }
+
+	<# foreach (var member in PrimaryPropertys) { #>/**
+     * <#= member.Value.Item1 #>
+     */
+    @ModelKey({ name: "<#= member.Key #>", dataType: System.<#= member.Value.Item2 #> })
+    public <#= member.Key #>: <#= member.Value.Item3 #>;
+	<#
+	}
+	#>
+
+	<# foreach (var member in ColumnPropertys) { #>/**
+     * <#= member.Value.Item1 #>
+     */
+    @ModelProperty({ name: "<#= member.Key #>", dataType: System.<#= member.Value.Item2 #> })
+    public <#= member.Key #>: <#= member.Value.Item3 #>;
+	<#
+	}
+	#>
+
+	<# foreach (var member in CommonPropertys) { #>/**
+     * <#= member.Value.Item1 #>
+     */
+    @Key({ name: "<#= member.Key #>", dataType: System.<#= member.Value.Item2 #> })
+    public <#= member.Key #>: <#= member.Value.Item3 #>;
+	<#
+	}
+	#>
+
+	<# foreach (var member in CalculatePropertys) { #>/**
+     * <#= member.Value.Item1 #>
+     */
+    @Key({ name: "<#= member.Key #>", dataType: System.<#= member.Value.Item2 #> })
+    public <#= member.Key #>: <#= member.Value.Item3 #>;
+	<#
+	}
+	#>
+	
+	<# foreach (var member in NavigationPropertys) { #>/**
+     * <#= member.Value.Item1 #>
+     */
+	<# if(member.Value.Item4 == true) { #>
+	<# if(!string.IsNullOrEmpty(member.Value.Item3)) { #>
+	@ModelNavigation({ name: "<#= member.Key #>", entityTypeName: "<#= member.Value.Item2 #>", isScalar: true, foreignKeyNames: ["<#= member.Value.Item3 #>"] })
+	<# } else { #>
+	@ModelNavigation({ name: "<#= member.Key #>", entityTypeName: "<#= member.Value.Item2 #>", isScalar: true })
+	<# } #>
+	public <#= member.Key #>: <#= member.Value.Item2 #>;
+	<# } else { #>
+	@ModelNavigation({ name: "<#= member.Key #>", entityTypeName: "<#= member.Value.Item2 #>", isScalar: false })
+    public <#= member.Key #>: Array<<#= member.Value.Item2 #>>;
+	<# }} #>
+}

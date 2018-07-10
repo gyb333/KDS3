@@ -1,0 +1,15 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<div dojoType="dojox/mvc/Group" class="groupDiv" style="width:100%;height:100%;position:relative;">
+   错误页面!
+</div>
+<script id="Error" type="text/javascript">
+    function <#=Identity #>_Error_init(screen) {
+        var VM = screen.Proxy;
+        screen.Initialize(0);
+    }
+</script>

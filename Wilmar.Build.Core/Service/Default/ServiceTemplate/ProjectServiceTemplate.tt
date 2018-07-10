@@ -1,0 +1,45 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Wilmar.Model.Core.Definitions" #>
+using Microsoft.OData.Edm;
+using System;
+using System.Web.OData.Builder;
+using System.Collections.Generic;
+using Wilmar.Service.Common.ProjectBase;
+using Wilmar.<#= Data.Identity #>.Service.Models;
+
+namespace Wilmar.<#= Data.Identity #>.Service
+{
+	public class <#= Data.Identity #>ProjectService : ProjectServiceBase
+	{
+		public override string Identity
+		{
+			get{ return  "<#= Data.Identity.ToLower()#>";}
+		}
+
+		public override void InitEdmModel(ODataConventionModelBuilder builder)
+		{
+<#	foreach (var item in Data.Entitys) { #>
+<# if(item.IsDimFast) { #>
+			builder.EntitySet<<#= item.ClassName #>DimProxy>("<#= item.ClassName #>s");
+<#	} else { #>
+			builder.EntitySet<<#= item.ClassName #>>("<#= item.ClassName #>s");
+<#	} #>
+<#	} #>
+
+<#	int index = 1;
+	foreach (var action in Data.Actions) { var field = "_aa" + (index++).ToString(); #>
+			var <#= field #> = builder.EntityType<<#= action.Entity.ClassName #>>()<#= action.Source.IsCollectionInvoke ? ".Collection" : "" #>.Action("<#= action.Name #>");
+<#		foreach (var para in action.Parameters) { #>
+			<#= field #>.<#= GenerateParameterPrefix(para.Value) #>Parameter<<#= GenerateElementType(para.Value) #>>("<#= para.Key #>");
+<#		} #>
+<#		if (action.ReturnType != null) { #>
+			<#= field #>.Returns<#= GenerateReturnsPrefix(action.ReturnType) #><<#= GenerateElementType(action.ReturnType) #>>(<#= GenerateReturnsEntityName(action.ReturnType) #>);
+<#		} #>
+<#	} #>
+		}
+	}
+}

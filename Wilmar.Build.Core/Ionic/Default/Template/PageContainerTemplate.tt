@@ -1,0 +1,18 @@
+﻿import { Injectable } from '@angular/core';
+import { ContainerBase, ProjectConfig } from '../../../platform';
+
+<# foreach (var model in Models) { #>
+import { <#= model #> } from './<#= model #>';
+<# } #>
+
+@Injectable()
+export class <#= Compile.Project.Identity.ToUpper() #>_CONTAINER extends ContainerBase {
+    constructor(config: ProjectConfig) {
+        super(config);
+    }
+    get models(): any[] {
+        return [
+			<#= GenerateCode() #>
+		];
+	}
+}

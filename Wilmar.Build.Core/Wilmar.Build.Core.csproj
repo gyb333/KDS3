@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4D2A63E8-C09A-4805-91DB-41E9375AEF94}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wilmar.Build.Core</RootNamespace>
+    <AssemblyName>Wilmar.Build.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.OData.Core, Version=6.15.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.OData.Core.6.15.0\lib\portable-net45+win+wpa81\Microsoft.OData.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.OData.Edm, Version=6.15.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.OData.Edm.6.15.0\lib\portable-net45+win+wpa81\Microsoft.OData.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Spatial, Version=6.15.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Spatial.6.15.0\lib\portable-net45+win+wpa81\Microsoft.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.OData, Version=5.9.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.OData.5.9.1\lib\net45\System.Web.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Wilmar.Foundation">
+      <HintPath>..\..\lib\core\$(Platform)\Wilmar.Foundation.dll</HintPath>
+    </Reference>
+    <Reference Include="Wilmar.Service.Common">
+      <HintPath>..\..\lib\core\$(Platform)\Wilmar.Service.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dojo\Default\Builders\BuildCommonMethod.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\AccordionBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\BoxPaneBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\FluidLayoutBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\MeasureBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\DimensionGroupBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\DimensionBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\MeasurePanelBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\MeasurePaneBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\DimensionPaneBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\DimensionPanelBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\IframeBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\PivotGridBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\TreeGridBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\DataGridBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\DialogBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\FormPanelBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\GroupBoxBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\ListBoxBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\MenuBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\MenuItemBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\ReportViewerBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\TabControlBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\DockPanelBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\PanelBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\StackPanelBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\GridPanelBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\TitlePaneBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\ToolBarBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\TooltipBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\TooltipDialogBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerControl\TreeViewBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ControlExtend.cs" />
+    <Compile Include="Dojo\Default\Builders\ControlBuildBase.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ButtonBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\CalendarBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ChartPaneBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ChartLegendBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ChartAxisYBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ChartActionBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ChartSeriesBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ChartAxisXBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\BarsChartBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\SelectPageBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\MonthYearTextBoxBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\LinesChartBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\CheckBoxBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\FileUploaderBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\SearchMultiSelectBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\CheckedMultiSelectBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\DateTimeTextBoxBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\RadioButtonList.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ComboBoxBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ComboButtonBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\DatePickerBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\DropDownButtonBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\RichTextBoxBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\HyperlinkBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ImageBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\LabelBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\NumericBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ProgressBarBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\RadioBoxBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\SelectBoxBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\TextareaBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\PieChartBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\TextBoxBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\TimePickerBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\ContainerBuildBase.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\ToggleButtonBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\PropertyControl\WebBrowserBuild.cs" />
+    <Compile Include="Dojo\Default\Builders\BuildScreenJs.cs" />
+    <Compile Include="Dojo\Default\ConfigBuild.cs" />
+    <Compile Include="Dojo\Default\PreviewIndexBuild.cs" />
+    <Compile Include="Dojo\Default\PreviewScreenBuild.cs" />
+    <Compile Include="Dojo\Default\ScreenBuild.cs" />
+    <Compile Include="Dojo\Default\IndexBuild.cs" />
+    <Compile Include="Dojo\Default\Templates\NoAuthorizedTemplate.cs">
+      <DependentUpon>NoAuthorizedTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Dojo\Default\Templates\NoAuthorizedTemplateBase.cs" />
+    <Compile Include="Dojo\Default\Templates\ErrorTemplate.cs">
+      <DependentUpon>ErrorTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Dojo\Default\Templates\IndexTemplate.cs">
+      <DependentUpon>IndexTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Dojo\Default\Templates\PreviewIndexTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PreviewIndexTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dojo\Default\Templates\ErrorTemplateBase.cs" />
+    <Compile Include="Ionic\Default\Builders\BuildCommon.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerBuildBase.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonItemOptionBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonItemSlidingBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonInfiniteScrollBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonRefresherBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonNavBarBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonButtonsBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonGridRowBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonGridColBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonGridBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonNavBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonItemBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonItemGroupBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonMenuBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonListBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonSegmentContentBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonSegmentButtonBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonSlidesBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonSegmentBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonTabBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonToolbarBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonTabsBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonFooterBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonContentBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonPageBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonHeaderBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\IonPanelBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\ControlBuildBase.cs" />
+    <Compile Include="Ionic\Default\Builders\ControlExtend.cs" />
+    <Compile Include="Ionic\Default\Builders\ContainerControl\PanelBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonTitleBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonContentTextBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonNoteBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonImageBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonToggleBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonButtonBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonIconBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonLabelBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonSearchbarBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonDateTimeBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonSelectBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonInputBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonRadioBuild.cs" />
+    <Compile Include="Ionic\Default\Builders\PropertyControl\IonCheckBoxBuild.cs" />
+    <Compile Include="Ionic\Default\ConfigBuild.cs" />
+    <Compile Include="Ionic\Default\IndexBuild.cs" />
+    <Compile Include="Ionic\Default\Template\BuildComm.cs" />
+    <Compile Include="Ionic\Default\Template\MetaDataDataSet.cs" />
+    <Compile Include="Ionic\Default\Template\MetaDataScreenParam.cs" />
+    <Compile Include="Ionic\Default\Template\MetaDataProperty.cs" />
+    <Compile Include="Ionic\Default\Template\MetaDataMethod.cs" />
+    <Compile Include="Ionic\Default\Template\PageMainTemplate.cs">
+      <DependentUpon>PageMainTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Ionic\Default\Template\PageContainerTemplateBase.cs" />
+    <Compile Include="Ionic\Default\Template\PageMainTemplateBase.cs" />
+    <Compile Include="Ionic\Default\Template\PageContainerTemplate.cs">
+      <DependentUpon>PageContainerTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Ionic\Default\Template\PageScriptTemplateBase.cs" />
+    <Compile Include="Ionic\Default\Template\PageScriptTemplate.cs">
+      <DependentUpon>PageScriptTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Ionic\Default\Template\ModuleTemplateBase.cs" />
+    <Compile Include="Ionic\Default\Template\ModuleTemplate.cs">
+      <DependentUpon>ModuleTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Ionic\Default\Template\ModelTemplateBase.cs" />
+    <Compile Include="Ionic\Default\Template\ModelTemplate.cs">
+      <DependentUpon>ModelTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Ionic\Default\PreviewIndexBuild.cs" />
+    <Compile Include="Ionic\Default\PreviewScreenBuild.cs" />
+    <Compile Include="Ionic\Default\ScreenBuild.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Default\DataContextBuild.cs" />
+    <Compile Include="Service\Default\EntityControllterBuild.cs" />
+    <Compile Include="Service\Default\EntityBuild.cs" />
+    <Compile Include="Service\Default\QueryControllterBuild.cs" />
+    <Compile Include="Service\Default\ServiceBuild.cs" />
+    <Compile Include="Service\Default\ServiceTemplate\ControllerTemplateBase.cs" />
+    <Compile Include="Service\Default\ServiceTemplate\DataContextTemplateBase.cs" />
+    <Compile Include="Service\Default\ServiceTemplate\EntityTemplateBase.cs" />
+    <Compile Include="Service\Default\ServiceTemplate\ControllerTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControllerTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\Default\ServiceTemplate\DataContextTemplate.cs">
+      <DependentUpon>DataContextTemplate.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Service\Default\ServiceTemplate\EntityTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\Default\ServiceTemplate\ProjectServiceTemplateBase.cs" />
+    <Compile Include="Service\Default\ServiceTemplate\ProjectServiceTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectServiceTemplate.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wilmar.Compile.Core\Wilmar.Compile.Core.csproj">
+      <Project>{ca59478c-9960-4cf6-a41f-fc56932c4448}</Project>
+      <Name>Wilmar.Compile.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wilmar.Model.Core\Wilmar.Model.Core.csproj">
+      <Project>{3bb5c0ee-f139-4916-b2eb-46cf1ca44193}</Project>
+      <Name>Wilmar.Model.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Kendo\Default\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dojo\Default\Templates\NoAuthorizedTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>NoAuthorizedTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Dojo\Default\Templates\ErrorTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ErrorTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Dojo\Default\Templates\IndexTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>IndexTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Dojo\Default\Templates\PreviewIndexTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PreviewIndexTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Ionic\Default\Template\PageMainTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PageMainTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Ionic\Default\Template\PageContainerTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PageContainerTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Ionic\Default\Template\PageScriptTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PageScriptTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Ionic\Default\Template\ModuleTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ModuleTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Ionic\Default\Template\ModelTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ModelTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Service\Default\ServiceTemplate\ControllerTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ControllerTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Service\Default\ServiceTemplate\DataContextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DataContextTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Service\Default\ServiceTemplate\EntityTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>EntityTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Service\Default\ServiceTemplate\ProjectServiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ProjectServiceTemplate.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

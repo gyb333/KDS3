@@ -1,0 +1,53 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<!DOCTYPE>
+<html>
+<head>
+    <title>益海嘉里渠道营销平台</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link href="../../favicon.ico" mce_href="favicon.ico" rel="bookmark" type="image/x-icon" />
+    <link href="../../favicon.ico" mce_href="favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="../../favicon.ico" mce_href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <link href="../../Frameworks/DoJo/Resources/common.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var dojoConfig = {
+            async: /async/.test(location.search),
+            baseUrl: ".",
+            packages: [{
+                name: "dojo",
+                location: "../../../Libs/dojo",
+            }, {
+                name: "doh",
+                location: "../../../Libs/util/doh"
+            }, {
+                name: "Core",
+                location: "../../../Frameworks/DoJo/Core",
+            }, {
+                name: "dijit",
+                location: "../../../Libs/dijit",
+            }, {
+                name: "dojox",
+                location: "../../../Libs/dojox",
+            }],
+            deps: ["dojo"]
+        };
+    </script>
+    <script type="text/javascript" src="../../Libs/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../../Libs/showLoading/jquery.showLoading.js"></script>
+	<script type="text/javascript" src="../../Libs/selectpage/selectpage.js"></script>
+    <script type="text/javascript" src="../../Libs/odatajs/odatajs-4.0.0.js"></script>
+    <script type="text/javascript" src="../../Libs/dojo/dojo.js" data-dojo-config="isDebug:true, parseOnLoad: false,async: true"></script>
+    <script type="text/javascript">
+        require(["Core/Platform", "dojo/domReady!"], function (pf) {
+            pf.Platform.StartUp();
+        });
+    </script>
+</head>
+<body class="claro">
+</body>
+</html>
